@@ -10,6 +10,11 @@ namespace ObserverDemo
     {
         static void Main(string[] args)
         {
+            Doer doer = new Doer();
+            doer.Attach(new UserInterface());
+            doer.Attach(new Logger());
+            doer.DoSomething("my data");
+            Console.ReadLine();
         }
     }
 }

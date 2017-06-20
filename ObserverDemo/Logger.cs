@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 
 namespace ObserverDemo
 {
-    public class Logger : IObserver
+    public class Logger
     {
-        public void Update(ISubject sender)
+        public void AfterDoSomethingWith(object sender, string data)
         {
-            Console.WriteLine($"Writing down {sender.Data.ToUpper()}.");
+            Console.WriteLine("Writing down {0}.", data.ToUpper());
+        }
+
+        public void AfterDoMore(object sender, Tuple<string,string> data)
+        {
+            Console.WriteLine("Writing down append {0}.", data.Item2.ToUpper());
         }
     }
 }

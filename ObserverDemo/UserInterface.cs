@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ObserverDemo
 {
-    public class UserInterface : IObserver
+    public class UserInterface
     {
-        public void Update(ISubject sender)
+        public void AfterDoSomethingWith(object sender, string data)
         {
-            Console.WriteLine($"Hey user, look at {sender.Data.ToUpper()}");
+            Console.WriteLine("Hey user, look at {0}.", data.ToUpper());
         }
     }
 }

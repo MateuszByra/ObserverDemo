@@ -6,31 +6,35 @@ using System.Threading.Tasks;
 
 namespace ObserverDemo
 {
-    public class Doer : ISubject
+    public class Doer
     {
-        private IList<IObserver> observers = new List<IObserver>();
-        public string Data { get; private set; }
+        public event EventHandler<string> AfterDoSomethingWith;
+        public event EventHandler<Tuple<string, string>> AfterDoMore;
 
-        public void Attach(IObserver observer)
+        private string data = string.Empty;
+
+        public void DoSomethingWith(string data)
         {
-            this.observers.Add(observer);
+            this.data = data;
+            OnAfterDoSomethingWith(this.data);
         }
 
-        public void Detach(IObserver observer)
+        public void DoMore(string appendData)
         {
-            this.observers.Remove(observer);
+            this.data += appendData;
+            OnAfterDoMore(this.data, appendData);
         }
 
-        public void DoSomething(string data)
+        private void OnAfterDoSomethingWith(string data)
         {
-            this.Data = data;
-            this.Notify();
+            if (this.AfterDoSomethingWith != null)
+                this.AfterDoSomethingWith(this, data);
         }
 
-        public void Notify()
+        private void OnAfterDoMore(string completeData, string appendedData)
         {
-            foreach (IObserver observer in this.observers)
-                observer.Update(this);
+            if (this.AfterDoMore != null)
+                this.AfterDoMore(this, Tuple.Create(completeData, appendedData));
         }
     }
 }
